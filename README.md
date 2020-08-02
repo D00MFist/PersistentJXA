@@ -1,5 +1,5 @@
 # PersistentJXA
-Collection of macOS persistence methods in JXA  <br />
+Collection of macOS persistence methods and miscellaneous tools in JXA  <br />
 
 # Usage
 * In Apfell :
