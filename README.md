@@ -3,7 +3,7 @@ Collection of macOS persistence methods and miscellaneous tools in JXA  <br />
 Related blog post: https://posts.specterops.io/persistent-jxa-66e1c3cd1cf5
 
 # Usage
-* In Apfell :
+* In Mythic (Apfell Agent) :
 
 ```JavaScript
 jsimport (Selected file)
