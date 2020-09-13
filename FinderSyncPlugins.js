@@ -58,7 +58,6 @@ var pluginArray = []
 	 var pluginPlist = pathToApp + '/Contents/PlugIns/' + pluginArray[key] + '/Contents/Info.plist'
 	 var contents = $.NSString.stringWithContentsOfFileEncodingError($(pluginPlist), $.NSUTF8StringEncoding, $()).js;
 	 var bundleId = contents.split("CFBundleIdentifier")[1].split("</string>")[0].replace('</key>','').replace('<string>','').replace(/\s/g,'')
-	 console.log(bundleId)
 	 enablePlugin(bundleId)		
 		}
 
