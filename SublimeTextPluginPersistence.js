@@ -25,18 +25,14 @@ try{
             .map(ObjC.unwrap);
     	}
 	
-	function executeBackground(actionPath){
-	var path = "/bin/chmod"
-	var args = ["+x",actionPath,"&"]
-	var pipe = $.NSPipe.pipe;
-	var file = pipe.fileHandleForReading;
-	var task = $.NSTask.alloc.init;
-	task.launchPath = path;
-	task.arguments = args;
-	task.standardOutput = pipe; 
-	task.standardError = pipe;
-	task.launch; 
-	}
+	function chmod(value, path) {
+        let a = $({NSFilePosixPermissions:value})
+        let p = $(path).stringByStandardizingPath
+        let e = $()
+        let r = $.NSFileManager.defaultManager
+                .setAttributesOfItemAtPathError(a, p, e)
+        return r
+    	}
         
 	function writeTextToFile(text, file, overwriteExistingContent) {
         var fileString = file.toString()
@@ -89,13 +85,14 @@ handle = ctypes.CDLL(load)`
 						} else {
 						 sublimePluginPath = sublime3Dir + '/Packages/'
 						 writePlugin(sublimePluginPath,pathToDylib)
+						 chmod(0o755,sublimePluginPath + "/PrettyText/PrettyText.py")
 						 executeBackground(sublimePluginPath + "/PrettyText/PrettyText.py")
 						 output += "Sublime Text Plugin Persistence enabled at " + sublimePluginPath + "/PrettyText/PrettyText.py"
 						 		} 		
 					} else {
 						 sublimePluginPath = sublime2Dir + '/Packages/'
 						 writePlugin(sublimePluginPath,pathToDylib)
-						 executeBackground(sublimePluginPath + "/PrettyText/PrettyText.py")
+						 chmod(0o755,sublimePluginPath + "/PrettyText/PrettyText.py")
 						 output += "Sublime Text Plugin Persistence enabled at  " + sublimePluginPath + "/PrettyText/PrettyText.py"
 						 	}
 				
