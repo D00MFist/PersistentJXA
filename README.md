@@ -1,6 +1,8 @@
 # PersistentJXA
 Collection of macOS persistence methods and miscellaneous tools in JXA  <br />
-Related blog post: https://posts.specterops.io/persistent-jxa-66e1c3cd1cf5
+Related blog posts: 
+- https://posts.specterops.io/persistent-jxa-66e1c3cd1cf5
+- https://posts.specterops.io/are-you-docking-kidding-me-9aa79c24bdc1
 
 # Usage
 * In Mythic (Apfell Agent) :
