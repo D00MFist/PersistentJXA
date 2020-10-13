@@ -36,7 +36,7 @@ function InjectCheck(Arg1) {
 
         output += "The " + applicationName + " application has a Hardened Runtime Value of " + signingFlags + '\n'
         if (signingFlags < hardenedRuntimeFlag) {
-            output += "Hardened Runtime is not set for the " + applicationName + " application. Nice and easy injection option: use 'DYLD_INSERT_LIBRARIES'. (e.g.: DYLD_INSERT_LIBRARIES=/PATH_TO/evil.dylib /Applications/Calculator.app/Contents/MacOS/Calculator &) or Attempt injection with listtasks/libinject in Mythic Agent poseidon" + '\n'
+            output += "Hardened Runtime is not set for the " + applicationName + " application. " + '\n' + "Nice and easy injection option: use 'DYLD_INSERT_LIBRARIES'. (e.g.: DYLD_INSERT_LIBRARIES=/PATH_TO/evil.dylib /Applications/Calculator.app/Contents/MacOS/Calculator &) or Attempt injection with listtasks/libinject in Mythic Agent poseidon" + '\n'
         } else {
             output += "Hardened Runtime is set" + '\n'
 
@@ -50,15 +50,15 @@ function InjectCheck(Arg1) {
             let getTaskkeyExists = entitlements["com.apple.security.get-task-allow"]
 
             if (disableDylbkeyExists && allowDylibkeyExsists) {
-                output += "The " + applicationName + " application contains the 'com.apple.security.cs.disable-library-validation (allows any dylib)' and 'com.apple.security.cs.allow-dyld-environment-variables' (allows DYLD_INSERT_LIBRARIES abuses) entitlements are present. Nice and easy injection option: use 'DYLD_INSERT_LIBRARIES'. (e.g.: DYLD_INSERT_LIBRARIES=/PATH_TO/evil.dylib /Applications/Calculator.app/Contents/MacOS/Calculator &" + '\n'
+                output += "The " + applicationName + " application contains the 'com.apple.security.cs.disable-library-validation (allows any dylib)' and 'com.apple.security.cs.allow-dyld-environment-variables' (allows DYLD_INSERT_LIBRARIES abuses) entitlements are present." + '\n' + "Nice and easy injection option: use 'DYLD_INSERT_LIBRARIES'. (e.g.: DYLD_INSERT_LIBRARIES=/PATH_TO/evil.dylib /Applications/Calculator.app/Contents/MacOS/Calculator &" + '\n'
             }
 
             if (unsignMemkeyExists && allowDylibkeyExsists) {
-                output += "The " + applicationName + " application contains the 'com.apple.security.cs.allow-unsigned-executable-memory' (allows shellcode injection) and 'com.apple.security.cs.allow-dyld-environment-variables' (allows DYLD_INSERT_LIBRARIES abuses) entitlements are present. Code injection is possible but requires some creativity that cannot be automated." + '\n'
+                output += "The " + applicationName + " application contains the 'com.apple.security.cs.allow-unsigned-executable-memory' (allows shellcode injection) and 'com.apple.security.cs.allow-dyld-environment-variables' (allows DYLD_INSERT_LIBRARIES abuses) entitlements are present." + '\n' + "Code injection is possible but requires some creativity that cannot be automated." + '\n'
             } else if (unsignMemkeyExists && disableDylbkeyExists) {
-                output += "The " + applicationName + " application contains the 'com.apple.security.cs.allow-unsigned-executable-memory' (allows shellcode injection) and 'com.apple.security.cs.disable-library-validation' (allows library injection) entitlements. Code injection is possible but requires some creativity that cannot be automated. Look into dylib hijacks or proxying" + '\n'
+                output += "The " + applicationName + " application contains the 'com.apple.security.cs.allow-unsigned-executable-memory' (allows shellcode injection) and 'com.apple.security.cs.disable-library-validation' (allows library injection) entitlements." + '\n' + "Code injection is possible but requires some creativity that cannot be automated. Look into dylib hijacks or proxying" + '\n'
             } else if (unsignMemkeyExists && allowDylibkeyExsists == false) {
-                output += "The " + applicationName + " application contains the 'com.apple.security.cs.allow-unsigned-executable-memory' entitlement is present. Code injection is possible but requires some creativity that cannot be automated." + '\n'
+                output += "The " + applicationName + " application contains the 'com.apple.security.cs.allow-unsigned-executable-memory' entitlement is present. " + '\n' + "Code injection is possible but requires some creativity that cannot be automated." + '\n'
             }
 
             if (getTaskkeyExists) {
