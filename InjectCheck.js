@@ -1,8 +1,10 @@
 function InjectCheck(Arg1) {
+// Based on help from its-a-feature & xorrior
+// Also inspired by SimpleXPCApp from r3ggi
 
-//Usage:
-//InjectCheck("All") --for all apps in '/Applications'
-//InjectCheck("/Applications/Firefox.app")  --for a specific Application Bundle
+    //Usage:
+    //InjectCheck("All") --for all apps in '/Applications'
+    //InjectCheck("/Applications/Firefox.app")  --for a specific Application Bundle
 
     var output = "";
 
@@ -26,14 +28,14 @@ function InjectCheck(Arg1) {
 
         //Get Hardened Runtime
         let applicationName = signingInformation["info-plist"].CFBundleExecutable
-         output += "************************************** " + applicationName + " ************************************** " + '\n'
+        output += "************************************** " + applicationName + " ************************************** " + '\n'
 
 
         let hardenedRuntimeFlag = 10000
         let signingFlags = signingInformation.flags.toString(16)
 
         output += "The " + applicationName + " application has a Hardened Runtime Value of " + signingFlags + '\n'
-        	if (signingFlags < hardenedRuntimeFlag) {
+        if (signingFlags < hardenedRuntimeFlag) {
             output += "Hardened Runtime is not set for the " + applicationName + " application. Nice and easy injection option: use 'DYLD_INSERT_LIBRARIES'. (e.g.: DYLD_INSERT_LIBRARIES=/PATH_TO/evil.dylib /Applications/Calculator.app/Contents/MacOS/Calculator &) or Attempt injection with listtasks/libinject in Mythic Agent poseidon" + '\n'
         } else {
             output += "Hardened Runtime is set" + '\n'
@@ -70,7 +72,7 @@ function InjectCheck(Arg1) {
 
         let asarExistscheck = $.NSFileManager.alloc.init.fileExistsAtPath(filePath)
         if (asarExistscheck == true) {
-            output += "The " + applicationName + " application contains a app.asar and is likely an Electron app. Can abuse ELECTRON_RUN_AS_NODE environment variable for injection. e.g: create plist and use launchctl to load tamper plist. Example is https://blog.xpnsec.com/macos-injection-via-third-party-frameworks/" + '\n'
+            output += "The " + applicationName + " application contains an app.asar file and is likely an Electron app. Can abuse ELECTRON_RUN_AS_NODE environment variable for injection. e.g: create plist and use launchctl to load tamper plist. Example at https://blog.xpnsec.com/macos-injection-via-third-party-frameworks/" + '\n'
         } else {
             output += "No 'app.asar' file. Likely not an Electron app" + '\n'
         }
@@ -85,31 +87,31 @@ function InjectCheck(Arg1) {
             .map(ObjC.unwrap);
     }
 
-if (Arg1 == "All") {
+    if (Arg1 == "All") {
 
-let enumerateFolderContents = listDirectory('/Applications')
+        let enumerateFolderContents = listDirectory('/Applications')
 
-function stoperror() {
-    return true;
-}
-var installedApps = []
-		for (var key in enumerateFolderContents) {
-		    try {
+        function stoperror() {
+            return true;
+        }
+        var installedApps = []
+        for (var key in enumerateFolderContents) {
+            try {
 
-		        codeSign("/Applications/" + enumerateFolderContents[key])
-		    } catch (e) {
-		        stoperror(e)
-		    }
+                codeSign("/Applications/" + enumerateFolderContents[key])
+            } catch (e) {
+                stoperror(e)
+            }
 
-		}
-} else {
-	try {
+        }
+    } else {
+        try {
 
-		 codeSign(Arg1)
-		    } catch (e) {
-		        stoperror(e)
-		    }
+            codeSign(Arg1)
+        } catch (e) {
+            stoperror(e)
+        }
 
-}
-return output
+    }
+    return output
 }
