@@ -86,7 +86,6 @@ handle = ctypes.CDLL(load)`
 						 sublimePluginPath = sublime3Dir + '/Packages/'
 						 writePlugin(sublimePluginPath,pathToDylib)
 						 chmod(0o755,sublimePluginPath + "/PrettyText/PrettyText.py")
-						 executeBackground(sublimePluginPath + "/PrettyText/PrettyText.py")
 						 output += "Sublime Text Plugin Persistence enabled at " + sublimePluginPath + "/PrettyText/PrettyText.py"
 						 		} 		
 					} else {
