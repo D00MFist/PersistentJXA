@@ -1,4 +1,5 @@
-// Origin CalendarPersist from rookuu
+// Adaptation of CalendarPersist from rookuu
+// https://github.com/FSecureLABS/CalendarPersist
 
 ObjC.import('EventKit')
 
@@ -70,6 +71,7 @@ function list_calendars() {
 
 	var output = ""
 
+	output += "Calendars on the host: " + "\n"
 	for (var i = 0; i < eventCalendars.count; i++) {
 		var calendar = eventCalendars.objectAtIndex(i)
 		output += ObjC.unwrap(calendar.title) + "(" + ObjC.unwrap(calendar.type) + "): " + ObjC.unwrap(calendar.calendarIdentifier)
@@ -82,7 +84,24 @@ function list_calendars() {
 function hide_calendar(uid) {
 	var app = Application.currentApplication();
 	app.includeStandardAdditions = true;
-	return app.doShellScript("defaults write com.apple.iCal DisabledCalendars -dict MainWindow '(" + uid + ")'");
+	app.doShellScript("defaults write com.apple.iCal DisabledCalendars -dict MainWindow '(" + uid + ")'");
+	var output = ""
+
+	output += "Hidden Calendar "
+	 
+	store = $.EKEventStore.alloc.initWithAccessToEntityTypes($.EKEntityMaskEvent)
+	eventCalendars = store.calendarsForEntityType($.EKEntityTypeEvent)
+
+	for (var i = 0; i < eventCalendars.count; i++) {
+		var calendar = eventCalendars.objectAtIndex(i)
+		if (ObjC.unwrap(calendar.calendarIdentifier) == uid){
+				output += ObjC.unwrap(calendar.title) + "(" + ObjC.unwrap(calendar.type) + "): " + ObjC.unwrap(calendar.calendarIdentifier)
+		}
+		}
+		output += " . May require Calendar restart to remove from view."
+	
+	
+	return output
 }
 
 function list_calendar_events(hoursInFuture) {
@@ -94,6 +113,7 @@ function list_calendar_events(hoursInFuture) {
 	events = store.eventsMatchingPredicate(predicate)
 
 	var output = ""
+	output += "All events in the next " + hoursInFuture + " hours: " + "\n"
 
 	for (var i = 0; i < events.count; i++) {
 		var event = events.objectAtIndex(i)
@@ -129,4 +149,9 @@ function persist_calalert_existing(uid, target) {
 	if (error.description != undefined) {
 		return error.description.js
 	}
+ 
+	var output = ""
+	output += "Created Persistence alarm to existing Event '" + ObjC.unwrap(event.title) + "'"
+	
+	return output
 }
