@@ -37,7 +37,6 @@ function DockPersist(Browser, BundleID, ReloadNow) {
 					var unwrapBookSafari = ObjC.deepUnwrap(bookSafari)
 					
 					var arrayLength = unwrapDockplist["persistent-apps"].length;
-					console.log(unwrapDockplist["persistent-apps"])
                         for (var i = 0; i < arrayLength; i++) {
                            if (unwrapDockplist["persistent-apps"][i]["tile-data"]["bundle-identifier"] == "com.apple.Safari") {
                                unwrapDockplist["persistent-apps"][i]["tile-data"]["book"] = unwrapBookSafari
@@ -74,7 +73,6 @@ function DockPersist(Browser, BundleID, ReloadNow) {
 					var unwrapBookChrome = ObjC.deepUnwrap(bookChrome)
 					
 					var arrayLength = unwrapDockplist["persistent-apps"].length;
-					console.log(unwrapDockplist["persistent-apps"])
                         for (var i = 0; i < arrayLength; i++) {
                            if (unwrapDockplist["persistent-apps"][i]["tile-data"]["bundle-identifier"] == "com.google.Chrome") {
                                unwrapDockplist["persistent-apps"][i]["tile-data"]["book"] = unwrapBookChrome
