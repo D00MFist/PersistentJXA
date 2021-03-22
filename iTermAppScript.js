@@ -50,7 +50,7 @@ os.system(templateCommand)
 iterm2.run_forever(main)`
 
 	var newCommand = commandTemplate.replace(/templateCommand/g,'"' + command + '"' )
-	writeTextToFile(newCommand, itermScriptpath, true)
+	writeTextToFile(newCommand, itermScriptpath, false)
 	output += "iTerm Application script at  " + itermScriptpath + " was modified for Persistence"					
 				
 }catch(error){
