@@ -29,8 +29,9 @@ function ScreenSaverPersist(SaverName) {
         task.standardError = pipe;
         task.launch;
 		}
-			
-	var enumerateFolderContents = listDirectory("/Users/itsatrap/Library/Preferences/ByHost/")
+
+	var byHostPrefsDirectory = userHome + "/Library/Preferences/ByHost/"
+	var enumerateFolderContents = listDirectory(byHostPrefsDirectory)
 	
 	var screenSaverplistPath = ""
 		for (key in enumerateFolderContents){
@@ -39,7 +40,7 @@ function ScreenSaverPersist(SaverName) {
 			}
 		}
 		
-		var screenPlist = userHome + "/Library/Preferences/ByHost/" + screenSaverplistPath
+		var screenPlist = byHostPrefsDirectory + screenSaverplistPath
 		var plist = $.NSMutableDictionary.alloc.initWithContentsOfFile(screenPlist)
         var unwrapScreenPlist = ObjC.deepUnwrap(plist)
 		
