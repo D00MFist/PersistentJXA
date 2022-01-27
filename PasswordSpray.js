@@ -1,4 +1,4 @@
-function test_password(account, creds) {
+function PasswordSpray(account, creds) {
     ObjC.import("OpenDirectory");
     var session = $.ODSession.defaultSession;
     var sessionType = 0x2201 // $.kODNodeTypeAuthentication
