@@ -8,7 +8,7 @@ function PasswordSpray(account, creds) {
     var results = []
     var user = node.recordWithRecordTypeNameAttributesError(recType, $(account), $(), $())
     try {
-        var passwords = creds.split(", ")
+        var passwords = creds.split(",")
         for (var key in passwords) {
             if (user.js !== undefined) {
                 if (user.verifyPasswordError($(passwords[key]), $())) {
